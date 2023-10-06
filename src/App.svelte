@@ -23,7 +23,7 @@
 <main>
   <div class="background-video" id="background-video">
     <video autoplay loop muted>
-      <source src="/bg.mp4" type="video/mp4">
+      <source src="https://c.zj.is/t/radio/bg.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -90,7 +90,7 @@
     z-index: 2;
   }
 
-  /*show hotkeys on bottom left*/
+  /*show hotkeys on top left*/
   .hotkeys {
     position: absolute;
     top: 0;
