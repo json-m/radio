@@ -1,57 +1,101 @@
 <script>
   import Radio from "./lib/Radio.svelte";
   import Viz from "./lib/Viz.svelte";
+  import Hotkeys from "./lib/Hotkeys.svelte";
+
+  // register hotkey V to toggle hiding the following elements: visualization, background-video
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "v") {
+      const viz = document.getElementById("visualization");
+      const bg = document.getElementById("background-video");
+      if (viz.style.display === "none") {
+        viz.style.display = "block";
+        bg.style.display = "block";
+      } else {
+        viz.style.display = "none";
+        bg.style.display = "none";
+      }
+    }
+  });
+
 </script>
 
 <main>
-  <div class="wrapper">
-    <video autoplay loop muted playsinline>
+  <div class="background-video" id="background-video">
+    <video autoplay loop muted>
       <source src="/bg.mp4" type="video/mp4">
     </video>
-    <canvas id="canviz" class="viz"></canvas>
+  </div>
 
-    <div class="header">
-      <Viz></Viz>
-      <img src="https://c.zj.is/kerdesk.png" class="center" alt="froge"><br />
-      <Radio></Radio>
-    </div>
+  <div class="canvas-overlay" id="visualization">
+    <Viz></Viz>
+  </div>
+
+  <div class="audio-controls">
+    <Radio></Radio>
+  </div>
+
+  <div id="hotkeys" class="hotkeys">
+    <Hotkeys></Hotkeys>
   </div>
 </main>
 
 <style>
-  .viz {
+  html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .background-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .canvas-overlay {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  /* show canvas on bottom of page */
+  #visualization {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 4;
+  }
+
+  .audio-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 10;
-  }
-
-  video {
-    object-fit: fill;
-    position: absolute;
-    top: auto;
-    left: auto;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    z-index: 2;
   }
 
-  .wrapper {
-    border: 2px solid #000;
-    /*width: 400px;*/
-    width: 100vh;
-    height: 100vh;
-    /*height: 200px;*/
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  /*show hotkeys on bottom left*/
+  .hotkeys {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
   }
 
-  .header {
-    position: relative;
-  }
 </style>

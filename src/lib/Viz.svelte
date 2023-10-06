@@ -5,9 +5,10 @@
     onMount(() =>  {
         // init audio motion analyzer
         const audioMotion = new AudioMotionAnalyzer(
-            document.getElementById('canviz'),
+            document.getElementById('visualization'),
             {
                 source: document.getElementById('audio'),
+                height: window.innerHeight/3,
                 mode: 2,
                 barSpace: 4,
                 mirror: 1,
@@ -32,5 +33,13 @@
 
         // update gradient option to "cool"
         audioMotion.setOptions({gradient: "cool"});
+
+        // hotkey F to show toggle showing fps counter
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'KeyF') {
+                audioMotion.showFPS = !audioMotion.showFPS;
+                console.log("aM debug: toggled FPS counter?");
+            }
+        });
     });
 </script>
